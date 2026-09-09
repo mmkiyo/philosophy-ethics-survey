@@ -1,129 +1,1029 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbxJCrbpjGUQIvkOSGzWfNrM0vB_HJA8WftpKRRwX_nL69G8S0L4909SoWjB9FGpVo0Ghw/exec";
 
-  <title>哲学・倫理学アンケート</title>
+const questions = [
+  {
+    id: "q1",
+    type: "radio",
+    title: "これまでに哲学・倫理学を学んだ経験はありますか？",
+    required: true,
+    options: [
+      "ある",
+      "少しある",
+      "ほとんどない",
+      "まったくない",
+      "その他"
+    ]
+  },
 
-  <link rel="stylesheet" href="style.css">
-</head>
+  {
+    id: "q2",
+    type: "textarea",
+    title: "哲学・倫理学をどのように学びましたか？",
+    description:
+      "授業、読書、動画、独学など、具体的に教えてください。特にない場合は「特になし」と入力してください。",
+    required: true,
+    conditional: true
+  },
 
-<body>
+  {
+    id: "q3",
+    type: "radio",
+    title: "現在、哲学・倫理学にどの程度興味がありますか？",
+    required: true,
+    options: [
+      "とても興味がある",
+      "ある程度興味がある",
+      "どちらともいえない",
+      "あまり興味がない",
+      "まったく興味がない"
+    ]
+  },
 
-  <div class="container">
+  {
+    id: "q4",
+    type: "textarea",
+    title: "あなたにとって「倫理学」とは、どのようなものですか？",
+    required: true
+  },
 
-    <header>
-      <h1>哲学・倫理学アンケート</h1>
-      <p class="subtitle">
-        哲学・倫理学について、あなた自身の考えをお聞きします。
-      </p>
-    </header>
+  {
+    id: "q5",
+    type: "textarea",
+    title: "あなたにとって「哲学」とは、どのようなものですか？",
+    required: true
+  },
+
+  {
+    id: "q6",
+    type: "textarea",
+    title: "哲学・倫理学について、知っていることがあれば教えてください。",
+    description:
+      "人物、考え方、著作など、何でも構いません。特にない場合は「特になし」と入力してください。",
+    required: true
+  },
+
+  {
+    id: "q7",
+    type: "radio",
+    title:
+      "「善」や「悪」は、人間や社会とは無関係に、それ自体として存在すると思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q8",
+    type: "radio",
+    title:
+      "「善」は、文化や時代、人によって変わるものではなく、普遍的なものとして存在すると思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q9",
+    type: "radio",
+    title:
+      "「悪」は、文化や時代、人によって変わるものではなく、普遍的なものとして存在すると思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q10",
+    type: "radio",
+    title:
+      "どのような文化や社会であっても、絶対に「悪い」と言える行為は存在すると思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q11",
+    type: "radio",
+    title: "「正しいこと」は、人によって異なるものだと思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q12",
+    type: "radio",
+    title:
+      "ある行為が「善い」か「悪い」かは、文化や社会のあり方によって変わると思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q13",
+    type: "radio",
+    title:
+      "多くの人が正しいと考えることは、それだけで正しいと言えると思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q14",
+    type: "radio",
+    title:
+      "真理は、人によって異なるものではなく、最終的には一つに定まると思いますか？",
+    required: true,
+    options: [
+      "強くそう思う",
+      "ある程度そう思う",
+      "どちらともいえない",
+      "あまりそう思わない",
+      "まったくそう思わない"
+    ]
+  },
+
+  {
+    id: "q15",
+    type: "radio",
+    title:
+      "ある社会Aでは、奴隷制度が広く受け入れられており、多くの人が奴隷制度を正しいと考えています。この社会において、奴隷制度を「正しい」と言えると思いますか？",
+    required: true,
+    options: [
+      "正しいと言える",
+      "どちらかといえば正しいと言える",
+      "どちらともいえない",
+      "どちらかといえば正しいとは言えない",
+      "正しいとは言えない"
+    ]
+  },
+
+  {
+    id: "q16",
+    type: "radio",
+    title:
+      "ある人が、無関係な人々を無差別に殺害したいと考え、実際に殺害しました。この行為は倫理的に許されると思いますか？",
+    required: true,
+    options: [
+      "許される",
+      "どちらかといえば許される",
+      "どちらともいえない",
+      "どちらかといえば許されない",
+      "許されない"
+    ]
+  },
+
+  {
+    id: "q17",
+    type: "radio",
+    title:
+      "【トロッコ問題①】暴走するトロッコの先に5人の作業員がいます。あなたの前には線路を切り替えるレバーがあります。レバーを引けば、トロッコは別の線路に進み、そこにいる1人の作業員が死亡します。あなたはレバーを引きますか？",
+    required: true,
+    options: [
+      "引く",
+      "引かない"
+    ]
+  },
+
+  {
+    id: "q18",
+    type: "textarea",
+    title: "トロッコ問題①で、その選択をした理由を教えてください。",
+    required: true
+  },
+
+  {
+    id: "q19",
+    type: "radio",
+    title:
+      "【トロッコ問題②】暴走するトロッコの先に5人の作業員がいます。あなたの隣には大きな人が立っています。その人を線路に突き落とせばトロッコは止まり、5人を救えます。あなたはその人を突き落としますか？",
+    required: true,
+    options: [
+      "突き落とす",
+      "突き落とさない"
+    ]
+  },
+
+  {
+    id: "q20",
+    type: "textarea",
+    title: "トロッコ問題②で、その選択をした理由を教えてください。",
+    required: true
+  },
+
+  {
+    id: "q21",
+    type: "radio",
+    title:
+      "【薬の問題】ある病人が、非常に高価な薬を必要としています。しかし、その薬を買うお金がありません。薬局の人は薬の値段を下げようとしません。病人を助けるために、その人は薬を盗みました。この行為は倫理的に許されると思いますか？",
+    required: true,
+    options: [
+      "許される",
+      "どちらかといえば許される",
+      "どちらともいえない",
+      "どちらかといえば許されない",
+      "許されない"
+    ]
+  },
+
+  {
+    id: "q22",
+    type: "textarea",
+    title: "薬の問題で、その選択をした理由を教えてください。",
+    required: true
+  },
+
+  {
+    id: "q23",
+    type: "checkbox",
+    title:
+      "あなたが「良い・悪い」を判断するとき、重視しているものはどれですか？",
+    description: "あてはまるものをすべて選んでください。",
+    required: true,
+    options: [
+      "結果（多くの人にとって良い結果になるか）",
+      "結果（自分の利益になるか）",
+      "ルールや義務（守るべき原則に従っているか）",
+      "理性・論理",
+      "人の気持ちや人間関係（他者の気持ちを害さないか）",
+      "自分自身の信念・価値観",
+      "社会的な規範・慣習",
+      "他者の意見",
+      "自分が「普通はこうだ」と考える感覚",
+      "身近な人の価値観",
+      "直観",
+      "法律に反しているかどうか",
+      "その他"
+    ]
+  },
+
+  {
+    id: "q24",
+    type: "radio",
+    title:
+      "あなたが「良い・悪い」を判断するとき、特に1番重視しているものはどれですか？",
+    required: true,
+    options: [
+      "結果（多くの人にとって良い結果になるか）",
+      "結果（自分の利益になるか）",
+      "ルールや義務（守るべき原則に従っているか）",
+      "理性・論理",
+      "人の気持ちや人間関係（他者の気持ちを害さないか）",
+      "自分自身の信念・価値観",
+      "社会的な規範・慣習",
+      "他者の意見",
+      "自分が「普通はこうだ」と考える感覚",
+      "身近な人の価値観",
+      "直観",
+      "法律に反しているかどうか",
+      "その他"
+    ]
+  },
+
+  {
+    id: "q25",
+    type: "radio",
+    title:
+      "このアンケートに答えた後、哲学・倫理学への興味は変わりましたか？",
+    required: true,
+    options: [
+      "以前より興味が強くなった",
+      "少し興味が強くなった",
+      "変わらない",
+      "少し興味が弱くなった",
+      "以前より興味が弱くなった"
+    ]
+  },
+
+  {
+    id: "q26",
+    type: "textarea",
+    title:
+      "今回の質問の中で、特に答えにくかった・考えるのが難しかったものがあれば教えてください。",
+    description:
+      "質問番号や内容を書いてください。特になければ「特になし」で構いません。",
+    required: true
+  }
+];
+
+let currentQuestion = 0;
+const answers = {};
 
 
-    <!-- 開始画面 -->
-    <section id="startScreen" class="screen">
+/* =========================
+   HTML要素
+========================= */
 
-      <div class="intro">
-        <h2>はじめに</h2>
+const startScreen = document.getElementById("startScreen");
+const quizScreen = document.getElementById("quizScreen");
+const completeScreen = document.getElementById("completeScreen");
 
-        <p>
-          このアンケートには、哲学・倫理学についての経験や、
-          「善い・悪い」「正しい・間違っている」ことについての
-          あなた自身の考えをお答えいただきます。
-        </p>
+const startButton = document.getElementById("startButton");
 
-        <p>
-          正解・不正解のあるテストではありません。
-          あなた自身の考えに最も近いものを選んでください。
-        </p>
-      </div>
+const questionArea = document.getElementById("questionArea");
 
-      <div class="basic-info">
+const nextButton = document.getElementById("nextButton");
+const backButton = document.getElementById("backButton");
 
-        <label>
-          学生番号（任意）
-          <input type="text" id="studentNo">
-        </label>
-
-        <label>
-          氏名（任意）
-          <input type="text" id="studentName">
-        </label>
-
-        <label>
-          性別
-          <select id="gender">
-            <option value="">選択してください</option>
-            <option value="男性">男性</option>
-            <option value="女性">女性</option>
-            <option value="その他">その他</option>
-            <option value="回答しない">回答しない</option>
-          </select>
-        </label>
-
-        <p class="note">
-          ※学生番号・氏名は任意です。
-        </p>
-
-      </div>
-
-      <button id="startButton" class="main-button">
-        アンケートを開始する
-      </button>
-
-    </section>
+const progressFill = document.getElementById("progressFill");
+const progressText = document.getElementById("progressText");
 
 
-    <!-- 質問画面 -->
-    <section id="quizScreen" class="screen hidden">
+/* =========================
+   開始ボタン
+========================= */
 
-      <div class="progress-area">
-        <div id="progressText"></div>
+startButton.addEventListener("click", () => {
 
-        <div class="progress-bar">
-          <div id="progressFill"></div>
-        </div>
-      </div>
+  const studentNo = document.getElementById("studentNo").value.trim();
+  const studentName = document.getElementById("studentName").value.trim();
+  const gender = document.getElementById("gender").value;
 
-      <div id="questionArea"></div>
+  if (studentNo === "") {
+    alert("学生番号を入力してください。");
+    document.getElementById("studentNo").focus();
+    return;
+  }
 
-      <div class="navigation">
-        <button id="backButton" class="sub-button">
-          戻る
-        </button>
+  if (studentName === "") {
+    alert("氏名を入力してください。");
+    document.getElementById("studentName").focus();
+    return;
+  }
 
-        <button id="nextButton" class="main-button">
-          次へ
-        </button>
-      </div>
+  answers.studentNumber = studentNo;
+  answers.name = studentName;
+  answers.gender = gender;
 
-    </section>
+  startScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
 
-
-    <!-- 完了画面 -->
-    <section id="completeScreen" class="screen hidden">
-
-      <div class="complete-box">
-
-        <h2>回答ありがとうございました。</h2>
-
-        <p>
-          これでアンケートは終了です。
-        </p>
-
-        <p>
-          あなたの回答は、哲学・倫理学について考える授業のために使用します。
-        </p>
-
-      </div>
-
-    </section>
-
-  </div>
+  showQuestion();
+});
 
 
-  <script src="script.js"></script>
+/* =========================
+   質問表示
+========================= */
 
-</body>
-</html>
+function showQuestion() {
+
+  const q = questions[currentQuestion];
+
+  questionArea.innerHTML = "";
+
+  const title = document.createElement("h2");
+  title.textContent = q.title;
+  questionArea.appendChild(title);
+
+  if (q.description) {
+
+    const description = document.createElement("p");
+
+    description.className = "description";
+
+    description.textContent = q.description;
+
+    questionArea.appendChild(description);
+  }
+
+
+  if (q.type === "textarea") {
+    createTextarea(q);
+  }
+
+  if (q.type === "radio") {
+    createRadio(q);
+  }
+
+  if (q.type === "checkbox") {
+    createCheckbox(q);
+  }
+
+
+  updateProgress();
+
+  backButton.disabled = currentQuestion === 0;
+
+  nextButton.textContent =
+    currentQuestion === questions.length - 1
+      ? "回答を送信"
+      : "次へ";
+}
+
+
+/* =========================
+   textarea
+========================= */
+
+function createTextarea(q) {
+
+  const textarea = document.createElement("textarea");
+
+  textarea.id = "answer";
+
+  textarea.rows = 7;
+
+  textarea.value = answers[q.id] || "";
+
+  questionArea.appendChild(textarea);
+}
+
+
+/* =========================
+   radio
+========================= */
+
+function createRadio(q) {
+
+  const savedAnswer = answers[q.id];
+
+  q.options.forEach(option => {
+
+    const label = document.createElement("label");
+
+    label.className = "option";
+
+    const input = document.createElement("input");
+
+    input.type = "radio";
+
+    input.name = q.id;
+
+    input.value = option;
+
+    if (savedAnswer === option) {
+      input.checked = true;
+    }
+
+    label.appendChild(input);
+
+    label.appendChild(
+      document.createTextNode(option)
+    );
+
+    questionArea.appendChild(label);
+  });
+
+
+  /* 「その他」の自由入力 */
+
+  if (q.options.includes("その他")) {
+
+    const otherBox = document.createElement("input");
+
+    otherBox.type = "text";
+
+    otherBox.id = "otherInput";
+
+    otherBox.placeholder = "その他の内容を入力してください";
+
+    otherBox.style.display = "none";
+
+    if (
+      savedAnswer &&
+      savedAnswer.startsWith("その他：")
+    ) {
+      otherBox.value =
+        savedAnswer.replace("その他：", "");
+
+      document.querySelector(
+        `input[name="${q.id}"][value="その他"]`
+      ).checked = true;
+
+      otherBox.style.display = "block";
+    }
+
+    questionArea.appendChild(otherBox);
+
+
+    document.querySelectorAll(
+      `input[name="${q.id}"]`
+    ).forEach(input => {
+
+      input.addEventListener("change", () => {
+
+        if (input.value === "その他" && input.checked) {
+          otherBox.style.display = "block";
+          otherBox.focus();
+        } else {
+          otherBox.style.display = "none";
+          otherBox.value = "";
+        }
+
+      });
+
+    });
+
+  }
+
+}
+
+
+/* =========================
+   checkbox
+========================= */
+
+function createCheckbox(q) {
+
+  const savedAnswers = answers[q.id] || [];
+
+  q.options.forEach(option => {
+
+    const label = document.createElement("label");
+
+    label.className = "option";
+
+    const input = document.createElement("input");
+
+    input.type = "checkbox";
+
+    input.name = q.id;
+
+    input.value = option;
+
+
+    if (
+      savedAnswers.some(answer =>
+        answer === option ||
+        answer.startsWith(option + "：")
+      )
+    ) {
+      input.checked = true;
+    }
+
+
+    label.appendChild(input);
+
+    label.appendChild(
+      document.createTextNode(option)
+    );
+
+    questionArea.appendChild(label);
+  });
+
+
+  /* 「その他」の自由入力 */
+
+  if (q.options.includes("その他")) {
+
+    const otherBox = document.createElement("input");
+
+    otherBox.type = "text";
+
+    otherBox.id = "otherInput";
+
+    otherBox.placeholder =
+      "その他の内容を入力してください";
+
+    otherBox.style.display = "none";
+
+
+    const savedOther = savedAnswers.find(
+      answer => answer.startsWith("その他：")
+    );
+
+    if (savedOther) {
+
+      otherBox.value =
+        savedOther.replace("その他：", "");
+
+      const otherCheckbox =
+        document.querySelector(
+          `input[name="${q.id}"][value="その他"]`
+        );
+
+      otherCheckbox.checked = true;
+
+      otherBox.style.display = "block";
+    }
+
+
+    questionArea.appendChild(otherBox);
+
+
+    document.querySelectorAll(
+      `input[name="${q.id}"]`
+    ).forEach(input => {
+
+      input.addEventListener("change", () => {
+
+        if (input.value === "その他" && input.checked) {
+
+          otherBox.style.display = "block";
+
+          otherBox.focus();
+
+        } else if (
+          input.value === "その他" &&
+          !input.checked
+        ) {
+
+          otherBox.style.display = "none";
+
+          otherBox.value = "";
+        }
+
+      });
+
+    });
+
+  }
+
+}
+
+
+/* =========================
+   回答を保存
+========================= */
+
+function saveCurrentAnswer() {
+
+  const q = questions[currentQuestion];
+
+
+  /* textarea */
+
+  if (q.type === "textarea") {
+
+    const textarea =
+      document.getElementById("answer");
+
+    const value =
+      textarea.value.trim();
+
+    if (q.required && value === "") {
+
+      alert("回答を入力してください。");
+
+      textarea.focus();
+
+      return false;
+    }
+
+    answers[q.id] = value;
+
+    return true;
+  }
+
+
+  /* radio */
+
+  if (q.type === "radio") {
+
+    const selected =
+      document.querySelector(
+        `input[name="${q.id}"]:checked`
+      );
+
+
+    if (q.required && !selected) {
+
+      alert("回答を選択してください。");
+
+      return false;
+    }
+
+
+    if (!selected) {
+
+      answers[q.id] = "";
+
+      return true;
+    }
+
+
+    if (selected.value === "その他") {
+
+      const otherInput =
+        document.getElementById("otherInput");
+
+      const otherValue =
+        otherInput ? otherInput.value.trim() : "";
+
+
+      if (otherValue === "") {
+
+        alert("「その他」の内容を入力してください。");
+
+        if (otherInput) {
+          otherInput.focus();
+        }
+
+        return false;
+      }
+
+
+      answers[q.id] =
+        "その他：" + otherValue;
+
+    } else {
+
+      answers[q.id] =
+        selected.value;
+    }
+
+
+    return true;
+  }
+
+
+  /* checkbox */
+
+  if (q.type === "checkbox") {
+
+    const selected =
+      Array.from(
+        document.querySelectorAll(
+          `input[name="${q.id}"]:checked`
+        )
+      ).map(input => input.value);
+
+
+    if (q.required && selected.length === 0) {
+
+      alert("少なくとも1つ選択してください。");
+
+      return false;
+    }
+
+
+    if (
+      selected.includes("その他")
+    ) {
+
+      const otherInput =
+        document.getElementById("otherInput");
+
+      const otherValue =
+        otherInput ? otherInput.value.trim() : "";
+
+
+      if (otherValue === "") {
+
+        alert("「その他」の内容を入力してください。");
+
+        if (otherInput) {
+          otherInput.focus();
+        }
+
+        return false;
+      }
+
+
+      const index =
+        selected.indexOf("その他");
+
+      selected[index] =
+        "その他：" + otherValue;
+    }
+
+
+    answers[q.id] = selected;
+
+    return true;
+  }
+
+
+  return true;
+}
+
+
+/* =========================
+   次へ
+========================= */
+
+nextButton.addEventListener(
+  "click",
+  async () => {
+
+    if (!saveCurrentAnswer()) {
+      return;
+    }
+
+
+    /* Q2をスキップ */
+
+    if (
+      questions[currentQuestion].id === "q1"
+    ) {
+
+      const q1Answer = answers.q1;
+
+      if (
+        q1Answer === "ほとんどない" ||
+        q1Answer === "まったくない"
+      ) {
+
+        currentQuestion += 2;
+
+        showQuestion();
+
+        return;
+      }
+    }
+
+
+    if (
+      currentQuestion <
+      questions.length - 1
+    ) {
+
+      currentQuestion++;
+
+      /* Q2を飛ばした場合 */
+
+      if (
+        questions[currentQuestion].id === "q2" &&
+        (
+          answers.q1 === "ほとんどない" ||
+          answers.q1 === "まったくない"
+        )
+      ) {
+        currentQuestion++;
+      }
+
+      showQuestion();
+
+    } else {
+
+      await submitAnswers();
+    }
+
+  }
+);
+
+
+/* =========================
+   戻る
+========================= */
+
+backButton.addEventListener(
+  "click",
+  () => {
+
+    if (!saveCurrentAnswer()) {
+      return;
+    }
+
+
+    if (currentQuestion > 0) {
+
+      currentQuestion--;
+
+
+      /* Q2を飛ばして戻る */
+
+      if (
+        questions[currentQuestion].id === "q2" &&
+        (
+          answers.q1 === "ほとんどない" ||
+          answers.q1 === "まったくない"
+        )
+      ) {
+        currentQuestion--;
+      }
+
+
+      showQuestion();
+    }
+
+  }
+);
+
+
+/* =========================
+   進捗表示
+========================= */
+
+function updateProgress() {
+
+  const number =
+    currentQuestion + 1;
+
+  const percent =
+    (number / questions.length) * 100;
+
+  progressFill.style.width =
+    percent + "%";
+
+  progressText.textContent =
+    `${number} / ${questions.length}`;
+}
+
+
+/* =========================
+   Googleスプレッドシートへ送信
+========================= */
+
+async function submitAnswers() {
+
+  nextButton.disabled = true;
+
+  backButton.disabled = true;
+
+  nextButton.textContent =
+    "送信中…";
+
+
+  try {
+
+    const response =
+      await fetch(
+        GAS_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body:
+            JSON.stringify(answers)
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (
+      result.status === "success"
+    ) {
+
+      quizScreen.classList.add(
+        "hidden"
+      );
+
+      completeScreen.classList.remove(
+        "hidden"
+      );
+
+    } else {
+
+      throw new Error(
+        "送信に失敗しました。"
+      );
+    }
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "回答の送信に失敗しました。\n" +
+      "インターネット接続を確認して、もう一度お試しください。"
+    );
+
+
+    nextButton.disabled = false;
+
+    backButton.disabled = false;
+
+    nextButton.textContent =
+      "回答を送信";
+  }
+
+}
