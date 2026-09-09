@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>哲学・倫理学アンケート</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <header>
+      <h1>哲学・倫理学アンケート</h1>
+      <p class="subtitle">
+        哲学・倫理学について、あなた自身の考えをお聞きします。
+      </p>
+    </header>
+
+
+    <!-- 開始画面 -->
+    <section id="startScreen" class="screen">
+
+      <div class="intro">
+        <h2>はじめに</h2>
+
+        <p>
+          このアンケートには、哲学・倫理学についての経験や、
+          「善い・悪い」「正しい・間違っている」ことについての
+          あなた自身の考えをお答えいただきます。
+        </p>
+
+        <p>
+          正解・不正解のあるテストではありません。
+          あなた自身の考えに最も近いものを選んでください。
+        </p>
+      </div>
+
+      <div class="basic-info">
+
+        <label>
+          学生番号（任意）
+          <input type="text" id="studentNo">
+        </label>
+
+        <label>
+          氏名（任意）
+          <input type="text" id="studentName">
+        </label>
+
+        <label>
+          性別
+          <select id="gender">
+            <option value="">選択してください</option>
+            <option value="男性">男性</option>
+            <option value="女性">女性</option>
+            <option value="その他">その他</option>
+            <option value="回答しない">回答しない</option>
+          </select>
+        </label>
+
+        <p class="note">
+          ※学生番号・氏名は任意です。
+        </p>
+
+      </div>
+
+      <button id="startButton" class="main-button">
+        アンケートを開始する
+      </button>
+
+    </section>
+
+
+    <!-- 質問画面 -->
+    <section id="quizScreen" class="screen hidden">
+
+      <div class="progress-area">
+        <div id="progressText"></div>
+
+        <div class="progress-bar">
+          <div id="progressFill"></div>
+        </div>
+      </div>
+
+      <div id="questionArea"></div>
+
+      <div class="navigation">
+        <button id="backButton" class="sub-button">
+          戻る
+        </button>
+
+        <button id="nextButton" class="main-button">
+          次へ
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- 完了画面 -->
+    <section id="completeScreen" class="screen hidden">
+
+      <div class="complete-box">
+
+        <h2>回答ありがとうございました。</h2>
+
+        <p>
+          これでアンケートは終了です。
+        </p>
+
+        <p>
+          あなたの回答は、哲学・倫理学について考える授業のために使用します。
+        </p>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
